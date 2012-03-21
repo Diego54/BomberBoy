@@ -26,8 +26,8 @@ public abstract class Sound {
 	}
 
 	public Sound(byte[] input, AudioFormat inputFormat) {
-		this.setSamples(this.resample(input, inputFormat));
 		this.setFormat(SoundPlayer.INSTANCE.normalizeFormat(inputFormat));
+		this.setSamples(this.resample(input, inputFormat));
 
 	}
 
