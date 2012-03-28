@@ -55,8 +55,8 @@ public class Sprite extends SimpleAppearance<Sprite> {
 		AffineTransformOp transformOperation = new AffineTransformOp(transformation, AffineTransformOp.TYPE_BICUBIC);
 
 		return transformOperation.filter(this.getImage(), new BufferedImage(
-			(int) (this.getImage().getWidth() * transformation.getScaleX()),
-			(int) (this.getImage().getHeight() * transformation.getScaleY()),
+			(int) (this.getImage().getWidth() * Math.abs(transformation.getScaleX())),
+			(int) (this.getImage().getHeight() * Math.abs(transformation.getScaleY())),
 			this.getImage().getType()
 			));
 	}
@@ -86,15 +86,19 @@ public class Sprite extends SimpleAppearance<Sprite> {
 	// ****************************************************************
 
 	public Sprite flipHorizontally() {
-		AffineTransform transformation = AffineTransform.getTranslateInstance(this.getImage().getWidth(), 0);
+		AffineTransform transformation = new AffineTransform();
+		transformation.translate(this.getImage().getWidth(), 0);
+		transformation.scale(-1, 1);
 
-		return new Sprite(this.scaleHorizontally(-1).getTransformedImage(transformation));
+		return new Sprite(this.getTransformedImage(transformation));
 	}
 
 	public Sprite flipVertically() {
-		AffineTransform transformation = AffineTransform.getTranslateInstance(0, this.getImage().getHeight());
+		AffineTransform transformation = new AffineTransform();
+		transformation.translate(0, this.getImage().getHeight());
+		transformation.scale(1, -1);
 
-		return new Sprite(this.scaleVertically(-1).getTransformedImage(transformation));
+		return new Sprite(this.getTransformedImage(transformation));
 	}
 
 	// ****************************************************************
