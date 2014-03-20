@@ -26,6 +26,7 @@ public class GamePlayer extends Canvas implements Runnable {
 		this.setPreferredSize(game.getDisplaySize());
 		this.setMinimumSize(game.getDisplaySize());
 		this.setMaximumSize(game.getDisplaySize());
+		this.setSize(game.getDisplaySize());
 		this.setIgnoreRepaint(true);
 		this.setFocusTraversalKeysEnabled(false);
 		this.setFocusable(true);
