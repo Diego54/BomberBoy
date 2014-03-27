@@ -2,7 +2,10 @@ package com.uqbar.vainilla;
 
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
+import java.security.InvalidParameterException;
+
 import javax.swing.JFrame;
+
 
 public class DesktopGameLauncher extends JFrame {
 
@@ -75,5 +78,13 @@ public class DesktopGameLauncher extends JFrame {
 
 	protected void setPlayer(GamePlayer player) {
 		this.player = player;
+	}
+	
+	public static void main(String[] args) throws InstantiationException, IllegalAccessException, ClassNotFoundException {
+		if(args.length < 1) {
+			throw new InvalidParameterException("Se espera el nombre de la clase por parámetro");
+		}
+		Game game = (Game)Class.forName(args[0]).newInstance();
+		new DesktopGameLauncher(game).launch();
 	}
 }
