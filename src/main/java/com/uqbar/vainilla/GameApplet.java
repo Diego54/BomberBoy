@@ -1,8 +1,7 @@
 package com.uqbar.vainilla;
 
 import java.applet.Applet;
-import java.awt.Graphics;
-import java.awt.Graphics2D;
+import java.util.Properties;
 
 @SuppressWarnings("serial")
 public class GameApplet extends Applet {
@@ -28,11 +27,25 @@ public class GameApplet extends Applet {
 	@Override
 	public void init() {
 		super.init();
+		System.setProperty("sun.java2d.opengl", "true");
+		logStart();
 		player = new GamePlayer(this.buildGame());
+		
 		this.add(player);
 		this.setSize(player.getSize());
-		new Thread(player).start();
+		Thread thread = new Thread(player);
+		thread.setPriority(Thread.NORM_PRIORITY+1);
+		thread.start();
 		
+	}
+
+	private void logStart() {
+		System.out.println("Vainilla Applet started: " + this.getParameter("gameClass"));
+		System.out.println("using opengl= " + System.getProperty("sun.java2d.opengl"));
+		Properties sys = System.getProperties();
+		for(Object key : sys.keySet()) {
+			System.out.println(key.toString() + "="+sys.get(key));
+		}
 	}
 
 }
