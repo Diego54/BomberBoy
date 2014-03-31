@@ -3,6 +3,9 @@ package com.uqbar.vainilla;
 import java.applet.Applet;
 import java.util.Properties;
 
+import com.uqbar.vainilla.appearances.Sprite;
+import com.uqbar.vainilla.utils.AppletResourceProvider;
+
 @SuppressWarnings("serial")
 public class GameApplet extends Applet {
 
@@ -27,7 +30,6 @@ public class GameApplet extends Applet {
 	@Override
 	public void init() {
 		super.init();
-		System.setProperty("sun.java2d.opengl", "true");
 		logStart();
 		player = new GamePlayer(this.buildGame());
 		

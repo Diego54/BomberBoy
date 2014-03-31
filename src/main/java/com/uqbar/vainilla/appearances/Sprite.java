@@ -4,26 +4,38 @@ import java.awt.Graphics2D;
 import java.awt.geom.AffineTransform;
 import java.awt.image.AffineTransformOp;
 import java.awt.image.BufferedImage;
+import java.io.IOException;
+import java.net.URL;
+import java.util.ResourceBundle;
+
 import javax.imageio.ImageIO;
+
 import com.uqbar.vainilla.exceptions.GameException;
+import com.uqbar.vainilla.utils.ClassLoaderResourcesProvider;
+import com.uqbar.vainilla.utils.ResourceProvider;
 
 @SuppressWarnings("unchecked")
 public class Sprite extends SimpleAppearance<Sprite> {
 
 	private BufferedImage image;
+	public static ResourceProvider defaultResourceProvider = new ClassLoaderResourcesProvider();
 
 	// ****************************************************************
 	// ** STATIC
 	// ****************************************************************
 
 	public static Sprite fromImage(String imageFileName) {
+		return fromImage(imageFileName, defaultResourceProvider);
+	}
+
+	public static Sprite fromImage(String imageFileName, ResourceProvider provider) {
 		BufferedImage image;
 
 		try {
-			image = ImageIO.read(Sprite.class.getResource(imageFileName));
-		}
-		catch(Exception e) {
-			throw new GameException("The resource '" + imageFileName + "' was not found");
+			image = ImageIO.read(provider.getResource(imageFileName));
+		} catch (Exception e) {
+			throw new GameException("The resource '" + imageFileName
+					+ "' was not found using " + provider.getClass().getName(), e);
 		}
 
 		return new Sprite(image);
@@ -52,13 +64,15 @@ public class Sprite extends SimpleAppearance<Sprite> {
 	}
 
 	protected BufferedImage getTransformedImage(AffineTransform transformation) {
-		AffineTransformOp transformOperation = new AffineTransformOp(transformation, AffineTransformOp.TYPE_BICUBIC);
+		AffineTransformOp transformOperation = new AffineTransformOp(
+				transformation, AffineTransformOp.TYPE_BICUBIC);
 
-		return transformOperation.filter(this.getImage(), new BufferedImage(
-			(int) (this.getImage().getWidth() * Math.abs(transformation.getScaleX())),
-			(int) (this.getImage().getHeight() * Math.abs(transformation.getScaleY())),
-			this.getImage().getType()
-			));
+		return transformOperation.filter(
+				this.getImage(),
+				new BufferedImage((int) (this.getImage().getWidth() * Math
+						.abs(transformation.getScaleX())), (int) (this
+						.getImage().getHeight() * Math.abs(transformation
+						.getScaleY())), this.getImage().getType()));
 	}
 
 	// ****************************************************************
@@ -67,11 +81,13 @@ public class Sprite extends SimpleAppearance<Sprite> {
 
 	@Override
 	public Sprite scale(double scaleX, double scaleY) {
-		return new Sprite(this.getTransformedImage(AffineTransform.getScaleInstance(scaleX, scaleY)));
+		return new Sprite(this.getTransformedImage(AffineTransform
+				.getScaleInstance(scaleX, scaleY)));
 	}
 
 	public Sprite rotate(double radians) {
-		BufferedImage newImage = new BufferedImage((int) this.getWidth(), (int) this.getHeight(), this.getImage().getType());
+		BufferedImage newImage = new BufferedImage((int) this.getWidth(),
+				(int) this.getHeight(), this.getImage().getType());
 
 		Graphics2D graphics = newImage.createGraphics();
 		graphics.rotate(radians, this.getWidth() / 2, this.getHeight() / 2);
@@ -117,19 +133,21 @@ public class Sprite extends SimpleAppearance<Sprite> {
 	// ** REPEATING
 	// ****************************************************************
 
-	public Sprite repeat(double horizontalRepetitions, double verticalRepetitions) {
+	public Sprite repeat(double horizontalRepetitions,
+			double verticalRepetitions) {
 		double horizontalIterations = Math.ceil(horizontalRepetitions);
 		double verticalIterations = Math.ceil(verticalRepetitions);
 		BufferedImage newImage = new BufferedImage( //
-			(int) (this.getWidth() * horizontalRepetitions), //
-			(int) (this.getHeight() * verticalRepetitions), //
-			this.getImage().getType() //
+				(int) (this.getWidth() * horizontalRepetitions), //
+				(int) (this.getHeight() * verticalRepetitions), //
+				this.getImage().getType() //
 		);
 		Graphics2D graphics = newImage.createGraphics();
 
-		for(int i = 0; i < horizontalIterations; i++ ) {
-			for(int j = 0; j < verticalIterations; j++ ) {
-				graphics.drawImage(this.getImage(), i * (int) this.getWidth(), j * (int) this.getHeight(), null);
+		for (int i = 0; i < horizontalIterations; i++) {
+			for (int j = 0; j < verticalIterations; j++) {
+				graphics.drawImage(this.getImage(), i * (int) this.getWidth(),
+						j * (int) this.getHeight(), null);
 			}
 		}
 
