@@ -6,16 +6,16 @@ public class GameException extends RuntimeException {
 	// ** CONSTRUCTORS
 	// ****************************************************************
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -2397610394154582031L;
+
 	public GameException() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
 
-	public GameException(String message, Throwable cause,
-			boolean enableSuppression, boolean writableStackTrace) {
-		super(message, cause, enableSuppression, writableStackTrace);
-		// TODO Auto-generated constructor stub
-	}
 
 	public GameException(String message, Throwable cause) {
 		super(message, cause);
