@@ -1,10 +1,9 @@
 package com.uqbar.vainilla;
 
 import java.applet.Applet;
+import java.awt.event.FocusEvent;
+import java.awt.event.FocusListener;
 import java.util.Properties;
-
-import com.uqbar.vainilla.appearances.Sprite;
-import com.uqbar.vainilla.utils.AppletResourceProvider;
 
 @SuppressWarnings("serial")
 public class GameApplet extends Applet {
@@ -31,10 +30,25 @@ public class GameApplet extends Applet {
 	public void init() {
 		super.init();
 		logStart();
-		player = new GamePlayer(this.buildGame());
+		final GamePlayer player = new GamePlayer(this.buildGame());
 		
 		this.add(player);
 		this.setSize(player.getSize());
+		this.addFocusListener(new FocusListener() {
+			
+			@Override
+			public void focusLost(FocusEvent arg0) {
+				player.pause();
+			}
+			
+			@Override
+			public void focusGained(FocusEvent arg0) {
+				player.resume();
+			}
+		});
+		this.setFocusable(true);
+		this.requestFocus();
+		this.requestFocusInWindow();
 		Thread thread = new Thread(player);
 		thread.setPriority(Thread.NORM_PRIORITY+1);
 		thread.start();
