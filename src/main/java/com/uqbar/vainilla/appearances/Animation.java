@@ -60,6 +60,10 @@ public class Animation implements Appearance {
 	public void render(GameComponent<?> component, Graphics2D graphics) {
 		this.getCurrentSprite().render(component, graphics);
 	}
+	
+	public void renderAt(int x, int y, Graphics2D graphics) {
+		this.getCurrentSprite().renderAt(x, y, graphics);
+	}
 
 	@Override
 	@SuppressWarnings("unchecked")

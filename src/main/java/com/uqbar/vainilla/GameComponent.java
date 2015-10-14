@@ -78,7 +78,7 @@ public class GameComponent<SceneType extends GameScene> {
 	}
 
 	public void alignRightTo(double x) {
-		this.alignRightTo(x + this.getAppearance().getWidth());
+		this.alignLeftTo(x - this.getAppearance().getWidth());
 	}
 
 	public void alignHorizontalCenterTo(double x) {
