@@ -1,6 +1,5 @@
 package com.uqbar.vainilla.appearances;
 
-
 import java.awt.Graphics2D;
 import com.uqbar.vainilla.GameComponent;
 
@@ -17,8 +16,7 @@ public class Animation implements Appearance {
 	public Animation(double meantime, Sprite... sprites) {
 		this.setMeantime(meantime);
 		this.setSprites(sprites);
-		this.setCurrentIndex(0);
-		this.setRemainingTime(meantime);
+		this.reset();
 	}
 
 	// ****************************************************************
@@ -38,6 +36,11 @@ public class Animation implements Appearance {
 	public double getDuration() {
 		return this.getMeantime() * this.getSprites().length;
 	}
+	
+	public void reset() {
+		this.setCurrentIndex(0);
+		this.setRemainingTime(meantime);
+	}
 
 	protected Sprite getCurrentSprite() {
 		return this.getSprites()[this.getCurrentIndex()];
@@ -51,7 +54,7 @@ public class Animation implements Appearance {
 	public void update(double delta) {
 		this.setRemainingTime(this.getRemainingTime() - delta);
 
-		if(this.getRemainingTime() <= 0) {
+		if (this.getRemainingTime() <= 0) {
 			this.advance();
 		}
 	}
@@ -60,7 +63,7 @@ public class Animation implements Appearance {
 	public void render(GameComponent<?> component, Graphics2D graphics) {
 		this.getCurrentSprite().render(component, graphics);
 	}
-	
+
 	public void renderAt(int x, int y, Graphics2D graphics) {
 		this.getCurrentSprite().renderAt(x, y, graphics);
 	}
@@ -74,7 +77,7 @@ public class Animation implements Appearance {
 	protected void advance() {
 		this.setCurrentIndex(this.getCurrentIndex() + 1);
 
-		if(this.getCurrentIndex() >= this.getSprites().length) {
+		if (this.getCurrentIndex() >= this.getSprites().length) {
 			this.setCurrentIndex(0);
 		}
 
@@ -115,5 +118,15 @@ public class Animation implements Appearance {
 
 	protected void setRemainingTime(double remainingTime) {
 		this.remainingTime = remainingTime;
+	}
+
+	public Animation flipHorizontally() {
+		Sprite[] newSprites = new Sprite[sprites.length];
+
+		for (int i = 0; i < sprites.length; i++) {
+			newSprites[i] = sprites[i].flipHorizontally();
+		}
+
+		return new Animation(getMeantime(), newSprites);
 	}
 }

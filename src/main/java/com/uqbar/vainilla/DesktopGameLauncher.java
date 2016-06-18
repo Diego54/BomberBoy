@@ -14,6 +14,10 @@ public class DesktopGameLauncher extends JFrame {
 	// ****************************************************************
 	// ** CONSTRUCTORS
 	// ****************************************************************
+	
+	static {
+		System.setProperty("sun.java2d.opengl", "true");
+	}
 
 	public DesktopGameLauncher(Game game) {
 		GamePlayer player = new GamePlayer(game);
