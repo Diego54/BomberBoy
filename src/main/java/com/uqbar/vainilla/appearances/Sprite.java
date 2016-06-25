@@ -105,8 +105,12 @@ public class Sprite extends SimpleAppearance<Sprite> {
 		AffineTransform transformation = new AffineTransform();
 		transformation.translate(this.getImage().getWidth(), 0);
 		transformation.scale(-1, 1);
+		
+		Sprite s = new Sprite(this.getTransformedImage(transformation));
+		s.setX(this.getX());
+		s.setY(this.getY());
 
-		return new Sprite(this.getTransformedImage(transformation));
+		return s;
 	}
 
 	public Sprite flipVertically() {
@@ -114,7 +118,11 @@ public class Sprite extends SimpleAppearance<Sprite> {
 		transformation.translate(0, this.getImage().getHeight());
 		transformation.scale(1, -1);
 
-		return new Sprite(this.getTransformedImage(transformation));
+		Sprite s = new Sprite(this.getTransformedImage(transformation));
+		s.setX(this.getWidth() - this.getX());
+		s.setY(this.getY());
+		
+		return s;
 	}
 
 	// ****************************************************************
