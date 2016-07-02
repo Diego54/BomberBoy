@@ -36,7 +36,7 @@ public class Animation implements Appearance {
 	public double getDuration() {
 		return this.getMeantime() * this.getSprites().length;
 	}
-	
+
 	public void reset() {
 		this.setCurrentIndex(0);
 		this.setRemainingTime(meantime);
@@ -118,6 +118,11 @@ public class Animation implements Appearance {
 
 	protected void setRemainingTime(double remainingTime) {
 		this.remainingTime = remainingTime;
+	}
+	
+	public void copyProgressFrom(Animation animation) {
+		this.setCurrentIndex(animation.getCurrentIndex());
+		this.setRemainingTime(animation.getRemainingTime());
 	}
 
 	public Animation flipHorizontally() {
