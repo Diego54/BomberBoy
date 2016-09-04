@@ -1,13 +1,11 @@
 package com.uqbar.vainilla.appearances;
 
-
 import java.awt.Color;
 import java.awt.Graphics2D;
 import com.uqbar.vainilla.GameComponent;
 
-public class Rectangle implements Appearance {
+public class Rectangle extends Shape<Rectangle> {
 
-	private Color color;
 	private int width, height;
 
 	// ****************************************************************
@@ -51,6 +49,8 @@ public class Rectangle implements Appearance {
 	@Override
 	public void render(GameComponent<?> component, Graphics2D graphics) {
 		graphics.setColor(this.color);
-		graphics.fillRect((int) component.getX(), (int) component.getY(), this.width, this.height);
+		graphics.fillRect((int) (component.getX() + getOffsetX()), (int) (component.getY() + getOffsetY()), this.width,
+				this.height);
 	}
+
 }

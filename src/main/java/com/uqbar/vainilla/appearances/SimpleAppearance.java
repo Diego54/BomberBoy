@@ -94,4 +94,22 @@ public abstract class SimpleAppearance<T extends Appearance> implements Appearan
 	public void setY(double y) {
 		this.y = y;
 	}
+	
+	// ****************************************************************
+	// ** OTHER OPERATIONS
+	// ****************************************************************
+	
+	@SuppressWarnings("unchecked")
+	public T center() {
+		this.setX(-this.getWidth() / 2);
+		this.setY(-this.getHeight() / 2);
+		return (T) this;
+	}
+
+	@SuppressWarnings("unchecked")
+	public T centerBottom() {
+		this.setX(-this.getWidth() / 2);
+		this.setY(-this.getHeight());
+		return (T) this;
+	}
 }

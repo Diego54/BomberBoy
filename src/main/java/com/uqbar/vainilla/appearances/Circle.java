@@ -5,7 +5,7 @@ import java.awt.Color;
 import java.awt.Graphics2D;
 import com.uqbar.vainilla.GameComponent;
 
-public class Circle implements Appearance {
+public class Circle extends Shape<Circle> {
 
 	private Color color;
 	private int diameter;
@@ -50,6 +50,6 @@ public class Circle implements Appearance {
 	@Override
 	public void render(GameComponent<?> component, Graphics2D graphics) {
 		graphics.setColor(this.color);
-		graphics.fillOval((int) component.getX(), (int) component.getY(), this.diameter, this.diameter);
+		graphics.fillOval((int) (component.getX() + this.getOffsetX()), (int) (component.getY() + this.getOffsetY()), this.diameter, this.diameter);
 	}
 }
