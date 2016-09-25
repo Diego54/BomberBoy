@@ -1,6 +1,5 @@
 package com.uqbar.vainilla.appearances;
 
-
 import java.awt.Canvas;
 import java.awt.Color;
 import java.awt.Font;
@@ -44,7 +43,7 @@ public class Label implements Appearance {
 		double answer = 0;
 		FontMetrics metrics = new Canvas().getFontMetrics(this.getFont());
 
-		for(String line : this.getTextLines()) {
+		for (String line : this.getTextLines()) {
 			answer = Math.max(answer, metrics.stringWidth(line));
 		}
 
@@ -93,11 +92,11 @@ public class Label implements Appearance {
 
 		this.getTextLines().get(0);
 
-		for(int index = 0; index < this.getTextLines().size(); index++) {
+		for (int index = 0; index < this.getTextLines().size(); index++) {
 			graphics.drawString(this.getTextLines().get(index), //
-			(int) component.getX(), //
-			(int) (component.getY() + this.getLineHeight() * (index + 1)) //
-				);
+					(int) (component.getX() + getOffsetX()), //
+					(int) (component.getY() + getOffsetY() + this.getLineHeight() * (index + 1)) //
+			);
 		}
 	}
 
@@ -128,4 +127,36 @@ public class Label implements Appearance {
 	protected void setTextLines(List<String> textLines) {
 		this.textLines = textLines;
 	}
+
+	private double offsetX;
+	private double offsetY;
+
+	public double getOffsetX() {
+		return offsetX;
+	}
+
+	public void setOffsetX(double offsetX) {
+		this.offsetX = offsetX;
+	}
+
+	public double getOffsetY() {
+		return offsetY;
+	}
+
+	public void setOffsetY(double offsetY) {
+		this.offsetY = offsetY;
+	}
+
+	public Label center() {
+		this.setOffsetX(-this.getWidth() / 2);
+		this.setOffsetY(-this.getHeight() / 2);
+		return this;
+	}
+
+	public Label centerBottom() {
+		this.setOffsetX(-this.getWidth() / 2);
+		this.setOffsetY(-this.getHeight());
+		return this;
+	}
+
 }
