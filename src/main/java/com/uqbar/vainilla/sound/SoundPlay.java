@@ -5,12 +5,13 @@ public class SoundPlay {
 	private Sound sound;
 	private float volume;
 	private int writtenSamples;
+	private boolean stopped = false;
 
 	// ****************************************************************
 	// ** CONSTRUCTORS
 	// ****************************************************************
 
-	public SoundPlay(Sound sound, float volume) throws Exception {
+	public SoundPlay(Sound sound, float volume) {
 		this.setSound(sound);
 		this.setVolume(volume);
 		this.setWrittenSamples(0);
@@ -32,7 +33,15 @@ public class SoundPlay {
 
 		this.writtenSamples += i;
 
-		return this.writtenSamples >= samples.length;
+		return shouldStopPlaying();
+	}
+
+	public boolean shouldStopPlaying() {
+		return this.writtenSamples >= this.sound.getSamples().length || this.stopped ;
+	}
+	
+	public void stop() {
+		this.stopped = true;
 	}
 
 	// ****************************************************************

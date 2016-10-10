@@ -62,12 +62,12 @@ public abstract class Sound {
 	// ** OPERATIONS
 	// ****************************************************************
 
-	public void play() {
-		this.play(1);
+	public SoundPlay play() {
+		return this.play(1);
 	}
 
-	public void play(float volume) {
-		SoundPlayer.INSTANCE.enqueueSound(this, volume);
+	public SoundPlay play(float volume) {
+		return SoundPlayer.INSTANCE.enqueueSound(this, volume);
 	}
 
 	protected abstract int renderSamples(float[] buffer, float vol, int offset, int length);

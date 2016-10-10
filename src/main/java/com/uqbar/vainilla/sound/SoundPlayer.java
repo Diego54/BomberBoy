@@ -48,23 +48,25 @@ public class SoundPlayer {
 	// ** OPERATIONS
 	// ****************************************************************
 
-	protected synchronized void enqueueSound(final Sound sound, final float volume) {
+	protected synchronized SoundPlay enqueueSound(final Sound sound, final float volume) {
+		final SoundPlay play = new SoundPlay(sound, volume);
 		new Thread() {
 			public void run() {
 				try {
-					playSound(sound, volume);
+					playSound(play, volume);
 				} catch (Exception e) {
 					System.out.println("Error trying to reproduce sound: " + sound.toString());
 					e.printStackTrace();
 				}
 			}
 		}.start();
+		
+		return play;
 	}
 
-	protected void playSound(Sound sound, float volume) throws Exception {
+	protected void playSound(SoundPlay play, float volume) throws Exception {
 		Logger.getGlobal().log(Level.INFO, "Started playing sound");
-		SoundPlay play = new SoundPlay(sound, volume);
-
+		
 		SourceDataLine line = AudioSystem.getSourceDataLine(format);
 
 		line.open(format, 4410);
@@ -97,6 +99,8 @@ public class SoundPlayer {
 				}
 			}
 		}
+		
+		line.close();
 		
 		Logger.getGlobal().log(Level.INFO, "Finished playing sound");
 	}
