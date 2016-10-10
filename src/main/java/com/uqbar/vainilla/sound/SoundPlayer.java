@@ -1,8 +1,8 @@
 package com.uqbar.vainilla.sound;
 
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 import javax.sound.sampled.AudioFormat;
 import javax.sound.sampled.AudioFormat.Encoding;
 import javax.sound.sampled.AudioSystem;
@@ -19,9 +19,7 @@ public class SoundPlayer {
 
 	private static final int NUM_SAMPLES = 44100 * 2;
 
-	private SourceDataLine line;
-	private final List<SoundPlay> buffers;
-	private Thread thread;
+	private AudioFormat format = new AudioFormat(44100.0f, 16, 2, true, false);
 
 	// ****************************************************************
 	// ** STATICS
@@ -35,61 +33,14 @@ public class SoundPlayer {
 	// ** CONSTRUCTORS
 	// ****************************************************************
 
-	protected SoundPlayer() {
-		this.buffers = new ArrayList<SoundPlay>();
-		AudioFormat format = new AudioFormat(44100.0f, 16, 2, true, false);
-
-		try {
-			this.line = AudioSystem.getSourceDataLine(format);
-			this.line.open(format, 4410);
-			this.line.start();
-
-			this.thread = new Thread(new Runnable() {
-				@Override
-				public void run() {
-					SoundPlayer self = SoundPlayer.this;
-					while(true) {
-						int bytesToWrite = self.line.available();
-
-						if(bytesToWrite > 0) {
-							byte[] bytes = self.readBytes(bytesToWrite);
-
-							int writtenBytes = 0;
-							while(writtenBytes != bytesToWrite) {
-								writtenBytes += self.line.write(bytes, writtenBytes, bytesToWrite - writtenBytes);
-							}
-						}
-
-						try {
-							Thread.sleep(1);
-						}
-						catch(InterruptedException e) {
-							throw new RuntimeException(e);
-						}
-					}
-				}
-			});
-			this.thread.setDaemon(true);
-			this.thread.start();
-		}
-		catch(Exception e) {
-			throw new RuntimeException(e);
-		}
-	}
-
 	// ****************************************************************
 	// ** QUERIES
 	// ****************************************************************
 
 	public AudioFormat normalizeFormat(AudioFormat format) {
-		return new AudioFormat(
-			SoundPlayer.ENCODING,
-			SoundPlayer.SAMPLE_RATE,
-			SoundPlayer.SAMPLE_SIZE_IN_BYTES * 8,
-			format.getChannels(),
-			format.getChannels() * SoundPlayer.SAMPLE_SIZE_IN_BYTES,
-			SoundPlayer.SAMPLE_RATE,
-			false //
+		return new AudioFormat(SoundPlayer.ENCODING, SoundPlayer.SAMPLE_RATE, SoundPlayer.SAMPLE_SIZE_IN_BYTES * 8,
+				format.getChannels(), format.getChannels() * SoundPlayer.SAMPLE_SIZE_IN_BYTES, SoundPlayer.SAMPLE_RATE,
+				false //
 		);
 	}
 
@@ -97,41 +48,85 @@ public class SoundPlayer {
 	// ** OPERATIONS
 	// ****************************************************************
 
-	protected synchronized void enqueueSound(Sound sound, float volume) {
-		try {
-			this.buffers.add(new SoundPlay(sound, volume));
-		}
-		catch(Exception ex) {
-			ex.printStackTrace();
-		}
+	protected synchronized void enqueueSound(final Sound sound, final float volume) {
+		new Thread() {
+			public void run() {
+				try {
+					playSound(sound, volume);
+				} catch (Exception e) {
+					System.out.println("Error trying to reproduce sound: " + sound.toString());
+					e.printStackTrace();
+				}
+			}
+		}.start();
 	}
 
-	private byte[] readBytes(int bytesToWrite) {
-		int samplesToWrite = bytesToWrite / 2;
-		float[] buffer = new float[NUM_SAMPLES];
-		byte[] answer = new byte[2 * NUM_SAMPLES];
+	protected void playSound(Sound sound, float volume) throws Exception {
+		Logger.getGlobal().log(Level.INFO, "Started playing sound");
+		SoundPlay play = new SoundPlay(sound, volume);
 
-		synchronized(this) {
-			Iterator<SoundPlay> iterator = this.buffers.iterator();
+		SourceDataLine line = AudioSystem.getSourceDataLine(format);
 
-			while(iterator.hasNext()) {
-				if(iterator.next().writeSamples(samplesToWrite, buffer)) {
-					iterator.remove();
+		line.open(format, 4410);
+		line.start();
+
+		boolean shouldContinue = true;
+
+		while (shouldContinue) {
+			int bytesToWrite = line.available();
+
+			if (bytesToWrite > 0) {
+				int samplesToWrite = bytesToWrite / 2;
+				float[] buffer = new float[NUM_SAMPLES];
+				byte[] answer = new byte[2 * NUM_SAMPLES];
+
+				shouldContinue = !play.writeSamples(samplesToWrite, buffer);
+
+				for (int i = 0; i < samplesToWrite; i++) {
+
+					short sample = toShortSample(buffer[i]);
+
+					answer[i * 2] = (byte) (sample | 0xff);
+					answer[i * 2 + 1] = (byte) (sample >> 8);
+				}
+
+				int writtenBytes = 0;
+
+				while (writtenBytes != bytesToWrite) {
+					writtenBytes += line.write(answer, writtenBytes, bytesToWrite - writtenBytes);
 				}
 			}
 		}
-
-		int bufferSize = this.buffers.size();
-		if(bufferSize > 0) {
-			for(int i = 0; i < samplesToWrite; i++) {
-
-				short sample = toShortSample(buffer[i]);
-
-				answer[i * 2] = (byte) (sample | 0xff);
-				answer[i * 2 + 1] = (byte) (sample >> 8);
-			}
-		}
-
-		return answer;
+		
+		Logger.getGlobal().log(Level.INFO, "Finished playing sound");
 	}
+
+//	private byte[] readBytes(int bytesToWrite) {
+//		int samplesToWrite = bytesToWrite / 2;
+//		float[] buffer = new float[NUM_SAMPLES];
+//		byte[] answer = new byte[2 * NUM_SAMPLES];
+//
+//		synchronized (this) {
+//			Iterator<SoundPlay> iterator = this.buffers.iterator();
+//
+//			while (iterator.hasNext()) {
+//				if (iterator.next().writeSamples(samplesToWrite, buffer)) {
+//					iterator.remove();
+//				}
+//			}
+//		}
+//
+//		int bufferSize = this.buffers.size();
+//		if (bufferSize > 0) {
+//			for (int i = 0; i < samplesToWrite; i++) {
+//
+//				short sample = toShortSample(buffer[i]);
+//
+//				answer[i * 2] = (byte) (sample | 0xff);
+//				answer[i * 2 + 1] = (byte) (sample >> 8);
+//			}
+//		}
+//
+//		return answer;
+//	}
 }
