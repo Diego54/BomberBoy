@@ -50,7 +50,7 @@ public class SoundBuilder {
 	// ****************************************************************
 
 	public Sound buildSound(String path) {
-		return this.buildSound(this.getClass().getResourceAsStream(path));
+		return this.buildSound(this.getClass().getClassLoader().getResourceAsStream(path));
 	}
 
 	public Sound buildSound(InputStream inputStream) {
