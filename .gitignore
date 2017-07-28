@@ -145,3 +145,7 @@ local.properties
 .scala_dependencies
 .worksheet
 
+BombAdict.iml
+pom.xml
+src/
+target/
