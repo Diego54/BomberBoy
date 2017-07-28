@@ -11,9 +11,9 @@ import java.awt.*;
 public class Block extends GameComponent<Battlefield> {
 
     public Block(){
-        setAppearance(new Rectangle(Color.BLACK,20,20));
-        setX(30);
-        setY(50);
+        setAppearance(new Rectangle(Color.BLACK,80,60));
+        setX(80);
+        setY(60);
     }
 
 }
