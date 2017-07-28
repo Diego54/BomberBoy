@@ -1,10 +1,17 @@
 package com.uqbar.vainilla.colissions;
 
+import com.uqbar.vainilla.GameComponent;
+
 import static java.awt.geom.Point2D.distanceSq;
 
 public class CollisionDetector {
 
 	public static final CollisionDetector INSTANCE = new CollisionDetector();
+
+	public String TOP = "TOP";
+	public String BOT = "BOT";
+	public String LEFT = "LEFT";
+	public String RIGHT = "RIGHT";
 
 	protected CollisionDetector() {
 	}
@@ -78,6 +85,35 @@ public class CollisionDetector {
 
 		return (x1 <= x2 && x2 < right1 || x2 <= x1 && x1 < right2)
 				&& (y1 <= y2 && y2 < bottom1 || y2 <= y1 && y1 < bottom2);
+	}
+
+	public String collidesRectAgainstRect(GameComponent gc1, GameComponent gc2){
+			double w = 0.5 * (gc1.getAppearance().getWidth() + gc2.getAppearance().getWidth());
+			double h = 0.5 * (gc1.getAppearance().getHeight()+ gc2.getAppearance().getHeight());;
+			double dx = (gc1.getX()+(gc1.getAppearance().getWidth() * 0.5)) - (gc2.getX()+(gc2.getAppearance().getWidth() * 0.5));
+			double dy = (gc1.getY()+(gc1.getAppearance().getHeight() * 0.5)) - (gc2.getY()+(gc2.getAppearance().getHeight() * 0.5));
+
+			if (Math.abs(dx) <= w && Math.abs(dy) <= h){
+            /* collision! */
+				double wy = w * dy;
+				double hx = h * dx;
+
+				if (wy > hx) {
+					if (wy > -hx) {
+						return TOP;
+					} else {
+						return RIGHT;
+					}
+				}else{
+					if (wy > -hx) {
+						return LEFT;
+					}else{
+						return BOT;
+					}
+				}
+			}
+			return "";
+
 	}
 
 	public boolean collidesCircleAgainstCircle(double x1, double y1, int ratio1, double x2, double y2, int ratio2) {
