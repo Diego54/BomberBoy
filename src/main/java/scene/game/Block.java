@@ -8,12 +8,12 @@ import java.awt.*;
 /**
  * Created by sergio on 27/07/17.
  */
-public class Block extends GameComponent<Battlefield> {
+public class Block extends RichGameComponent {
 
-    public Block(){
-        setAppearance(new Rectangle(Color.BLACK,80,60));
-        setX(80);
-        setY(60);
+    public Block(double x, double y){
+        setAppearance(new Rectangle(Color.BLACK,53,46));
+        setX(x);
+        setY(y);
     }
 
 }

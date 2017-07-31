@@ -11,14 +11,14 @@ import java.awt.*;
 /**
  * Created by sergio on 27/07/17.
  */
-public class Player extends GameComponent<Battlefield> {
+public class Player extends RichGameComponent {
 
     public double speed;
     public GameComponent<Battlefield> unBloque;
     KeyBinder kb = KeyBinder.INSTANCE;
 
     public Player(GameComponent gc){
-        setAppearance(new Rectangle(Color.RED,80,60));
+        setAppearance(new Rectangle(Color.RED,53,46));
         setX(20);
         setY(20);
         speed = 0.7;

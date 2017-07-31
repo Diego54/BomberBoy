@@ -24,7 +24,7 @@ public class BombAdict extends Game {
 
     @Override
     public Dimension getDisplaySize() {
-        return new Dimension(800,600);
+        return new Dimension(795,598);
     }
 
     @Override
