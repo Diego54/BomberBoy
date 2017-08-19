@@ -8,10 +8,11 @@ import java.awt.*;
 /**
  * Created by sergio on 27/07/17.
  */
-public class Block extends RichGameComponent {
+class Block extends RichGameComponent {
 
     public Block(double x, double y){
-        setAppearance(new Rectangle(Color.BLACK,53,46));
+        setAppearance(new Rectangle(Color.BLACK,w,h));
+        setZ(1);
         setX(x);
         setY(y);
     }

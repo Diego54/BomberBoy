@@ -14,15 +14,14 @@ import java.awt.*;
 public class Player extends RichGameComponent {
 
     public double speed;
-    public GameComponent<Battlefield> unBloque;
     KeyBinder kb = KeyBinder.INSTANCE;
 
-    public Player(GameComponent gc){
-        setAppearance(new Rectangle(Color.RED,53,46));
-        setX(20);
-        setY(20);
-        speed = 0.7;
-        unBloque = gc;
+    public Player(){
+        setAppearance(new Rectangle(Color.RED,w,h));
+        setX(53);
+        setY(46);
+        setZ(3);
+        speed = 2;
     }
 
     public void die(){
@@ -32,7 +31,7 @@ public class Player extends RichGameComponent {
     @Override
     public void update(DeltaState deltaState) {
         super.update(deltaState);
-        kb.checkKeys(deltaState,this);
+        kb.checkKeys(deltaState,this, this.getScene().getGrid());
     }
 
 }
