@@ -30,8 +30,8 @@ public class Player extends RichGameComponent {
 
     @Override
     public void update(DeltaState deltaState) {
-        super.update(deltaState);
         kb.checkKeys(deltaState,this, this.getScene().getGrid());
+        super.update(deltaState);
     }
 
 }
