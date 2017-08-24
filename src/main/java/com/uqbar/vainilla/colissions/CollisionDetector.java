@@ -88,31 +88,33 @@ public class CollisionDetector {
 	}
 
 	public String collidesRectAgainstRect(GameComponent gc1, GameComponent gc2){
-			double w = 0.5 * (gc1.getAppearance().getWidth() + gc2.getAppearance().getWidth());
-			double h = 0.5 * (gc1.getAppearance().getHeight()+ gc2.getAppearance().getHeight());;
-			double dx = (gc1.getX()+(gc1.getAppearance().getWidth() * 0.5)) - (gc2.getX()+(gc2.getAppearance().getWidth() * 0.5));
-			double dy = (gc1.getY()+(gc1.getAppearance().getHeight() * 0.5)) - (gc2.getY()+(gc2.getAppearance().getHeight() * 0.5));
+		if(gc2==null){
+			return "null";
+		}
+		double w = 0.5 * (gc1.getAppearance().getWidth() + gc2.getAppearance().getWidth());
+		double h = 0.5 * (gc1.getAppearance().getHeight()+ gc2.getAppearance().getHeight());;
+		double dx = (gc1.getX()+(gc1.getAppearance().getWidth() * 0.5)) - (gc2.getX()+(gc2.getAppearance().getWidth() * 0.5));
+		double dy = (gc1.getY()+(gc1.getAppearance().getHeight() * 0.5)) - (gc2.getY()+(gc2.getAppearance().getHeight() * 0.5));
 
-			if (Math.abs(dx) <= w && Math.abs(dy) <= h){
-            /* collision! */
-				double wy = w * dy;
-				double hx = h * dx;
-
-				if (wy > hx) {
-					if (wy > -hx) {
-						return TOP;
-					} else {
-						return RIGHT;
-					}
+		if (Math.abs(dx) <= w && Math.abs(dy) <= h){
+           /* collision! */
+			double wy = w * dy;
+			double hx = h * dx;
+			if (wy > hx) {
+				if (wy > -hx) {
+					return TOP;
+				} else {
+					return RIGHT;
+				}
+			}else{
+				if (wy > -hx) {
+					return LEFT;
 				}else{
-					if (wy > -hx) {
-						return LEFT;
-					}else{
-						return BOT;
-					}
+					return BOT;
 				}
 			}
-			return "";
+		}
+		return "null";
 
 	}
 

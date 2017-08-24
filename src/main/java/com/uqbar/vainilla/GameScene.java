@@ -136,8 +136,9 @@ public class GameScene {
 
 	public void removeComponent(GameComponent<?> component) {
 		this.getComponents().remove(component);
-
-		component.setScene(null);
+		if(component!=null){
+			component.setScene(null);
+		}
 	}
 
 	public void removeComponents(GameComponent<?>... components) {
