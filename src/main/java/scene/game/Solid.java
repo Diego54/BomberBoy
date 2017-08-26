@@ -15,4 +15,9 @@ public class Solid extends Block {
         setZ(2);
         return Color.BLACK;
     }
+
+    @Override
+    public void destroy() {
+
+    }
 }

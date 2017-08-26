@@ -13,7 +13,9 @@ import java.awt.*;
  */
 public class Player extends RichGameComponent {
 
-    public double speed;
+    private double speed;
+    private int fireRadius;
+    private int bombAmount;
     KeyBinder kb = KeyBinder.INSTANCE;
 
     public Player(){
@@ -21,6 +23,9 @@ public class Player extends RichGameComponent {
         setX(53);
         setY(46);
         setZ(3);
+
+        fireRadius = 2;
+        bombAmount = 2;
         speed = 2;
     }
 
@@ -34,4 +39,40 @@ public class Player extends RichGameComponent {
         super.update(deltaState);
     }
 
+    public void dropBomb(){
+        if (bombAmount > 0) {
+            bombAmount --;
+            Bomb b = new Bomb(this);
+            getScene().addComponent(b);
+            getScene().getGrid().addTile(b);
+        }
+    }
+
+    public double getSpeed() {
+        return speed;
+    }
+
+    public void setSpeed(double speed) {
+        this.speed = speed;
+    }
+
+    public int getBombAmount() {
+        return bombAmount;
+    }
+
+    public void setBombAmount(int bombAmount) {
+        this.bombAmount = bombAmount;
+    }
+
+    public void restoreStock() {
+        bombAmount++;
+    }
+
+    public int getFireRadius() {
+        return fireRadius;
+    }
+
+    public void fireUp() {
+        this.fireRadius++;
+    }
 }

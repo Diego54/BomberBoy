@@ -1,5 +1,7 @@
 package util;
 
+import java.sql.Struct;
+
 /**
  * Created by Pelotita on 19/8/2017.
  */
@@ -27,5 +29,13 @@ public class Vector2D {
 
     public void setY(Double y) {
         this.y = y;
+    }
+    public Vector2D clone(){
+        return new Vector2D(getX(),getY());
+    }
+
+    @Override
+    public String toString() {
+        return "Vecto2d{ " + getX() + " @ " + getY() +" }";
     }
 }

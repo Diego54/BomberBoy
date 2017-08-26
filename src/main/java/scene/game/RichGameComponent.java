@@ -19,4 +19,14 @@ public class RichGameComponent extends GameComponent<Battlefield> {
         Vector2D r = getCenter();
         return new Vector2D(r.getX()/w, r.getY()/h);
     }
+
+    public Vector2D getPositionAsVector(){
+        return new Vector2D(getX(),getY());
+    }
+
+    public Boolean pickeable(){
+        return false;
+    }
+
+    public void explode(){destroy();}
 }
