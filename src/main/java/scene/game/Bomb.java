@@ -53,7 +53,6 @@ public class Bomb extends RichGameComponent {
         for (int i = 0; i < getPlayer().getFireRadius(); i++) {
             firePos1.setX(firePos1.getX()+1);
             RichGameComponent elementOnTile = getScene().getGrid().getTile(firePos1);
-            System.out.println(firePos1);
             if (getTile().getX() >= 0){
                 Fire f3 = new Fire(firePos1);
                 this.getScene().addComponent(f3);
@@ -67,7 +66,6 @@ public class Bomb extends RichGameComponent {
         for (int i = 0; i < getPlayer().getFireRadius(); i++) {
             firePos2.setY(firePos2.getY()+1);
             RichGameComponent elementOnTile = getScene().getGrid().getTile(firePos2);
-            System.out.println(firePos2);
             if (getTile().getX() >= 0){
                 Fire f3 = new Fire(firePos2);
                 this.getScene().addComponent(f3);
@@ -81,7 +79,6 @@ public class Bomb extends RichGameComponent {
         for (int i = 0; i < getPlayer().getFireRadius(); i++) {
             firePos3.setX(firePos3.getX()-1);
             RichGameComponent elementOnTile = getScene().getGrid().getTile(firePos3);
-            System.out.println(firePos3);
             if (getTile().getX() >= 0){
                 Fire f3 = new Fire(firePos3);
                 this.getScene().addComponent(f3);
@@ -95,7 +92,6 @@ public class Bomb extends RichGameComponent {
         for (int i = 0; i < getPlayer().getFireRadius(); i++) {
             firePos4.setY(firePos4.getY()-1);
             RichGameComponent elementOnTile = getScene().getGrid().getTile(firePos4);
-            System.out.println(firePos4);
             if (getTile().getX() >= 0){
                 Fire f3 = new Fire(firePos4);
                 this.getScene().addComponent(f3);
@@ -107,10 +103,6 @@ public class Bomb extends RichGameComponent {
             }
         }
 
-    }
-
-    private boolean checkCollition(Vector2D fireTile, Vector2D blockTile){
-        return cd.collidesCircleAgainstRect(fireTile.getX(),fireTile.getY(),10,blockTile.getX(),blockTile.getY(),w,h);
     }
 
     public Player getPlayer() {

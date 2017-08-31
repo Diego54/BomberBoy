@@ -12,7 +12,7 @@ public class Solid extends Block {
 
     @Override
     Color getColor() {
-        setZ(2);
+        setZ(3);
         return Color.BLACK;
     }
 

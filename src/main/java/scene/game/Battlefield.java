@@ -4,7 +4,9 @@ import com.uqbar.vainilla.Game;
 import com.uqbar.vainilla.GameComponent;
 import com.uqbar.vainilla.GameScene;
 import com.uqbar.vainilla.events.constants.Key;
+import util.Vector2D;
 
+import java.awt.*;
 import java.lang.reflect.InvocationTargetException;
 
 /**
@@ -34,7 +36,10 @@ public class Battlefield extends GameScene {
         grid = new TileMap(15,13);
         buildBattlefield();
         fillGrid();
-        addComponent(new Player());
+        Key[] player1Controls = {Key.LEFT,Key.UP,Key.RIGHT,Key.DOWN,Key.A};
+        addComponent(new Player(player1Controls, Color.RED,new Vector2D(1,1)));
+        Key[] player2Controls = {Key.LEFT,Key.UP,Key.RIGHT,Key.DOWN,Key.A};
+        addComponent(new Player(player2Controls, Color.BLUE,new Vector2D(13,11)));
     }
 
     public void buildBattlefield(){

@@ -17,6 +17,7 @@ public class Destructible extends Block {
         super(x,y);
         this.setX(x*w);
         this.setY(y*h);
+        setZ(1);
     }
 
     @Override

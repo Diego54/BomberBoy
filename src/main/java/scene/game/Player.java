@@ -3,7 +3,9 @@ package scene.game;
 import com.uqbar.vainilla.DeltaState;
 import com.uqbar.vainilla.GameComponent;
 import com.uqbar.vainilla.appearances.Rectangle;
+import com.uqbar.vainilla.events.constants.Key;
 import util.KeyBinder;
+import util.Vector2D;
 
 import java.awt.*;
 
@@ -16,14 +18,14 @@ public class Player extends RichGameComponent {
     private double speed;
     private int fireRadius;
     private int bombAmount;
-    KeyBinder kb = KeyBinder.INSTANCE;
+    KeyBinder kb;
 
-    public Player(){
-        setAppearance(new Rectangle(Color.RED,w,h));
-        setX(53);
-        setY(46);
-        setZ(3);
-
+    public Player(Key[] controls, Color color,Vector2D tilePosition){
+        setAppearance(new Rectangle(color,w,h));
+        setX(tilePosition.getX()*w);
+        setY(tilePosition.getY()*h);
+        setZ(1);
+        kb= new KeyBinder(controls);
         fireRadius = 2;
         bombAmount = 2;
         speed = 2;
@@ -40,11 +42,12 @@ public class Player extends RichGameComponent {
     }
 
     public void dropBomb(){
-        if (bombAmount > 0) {
+        TileMap grid = getScene().getGrid();
+        if (bombAmount > 0 && grid.getTile(getTile())==null) {
             bombAmount --;
             Bomb b = new Bomb(this);
             getScene().addComponent(b);
-            getScene().getGrid().addTile(b);
+            grid.addTile(b);
         }
     }
 
@@ -52,16 +55,8 @@ public class Player extends RichGameComponent {
         return speed;
     }
 
-    public void setSpeed(double speed) {
-        this.speed = speed;
-    }
-
     public int getBombAmount() {
         return bombAmount;
-    }
-
-    public void setBombAmount(int bombAmount) {
-        this.bombAmount = bombAmount;
     }
 
     public void restoreStock() {

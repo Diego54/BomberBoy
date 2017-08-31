@@ -17,8 +17,8 @@ public class Fire extends RichGameComponent {
     public Fire(Vector2D pos) {
         this.setX((pos.getX().intValue()*w)+16.5);
         this.setY((pos.getY().intValue()*h)+13);
-        this.setAppearance(new Circle(Color.RED, 20));
-        setZ(10);
+        this.setAppearance(new Circle(new Color(255, 77, 0), 20));
+        setZ(2);
     }
 
     public void update(DeltaState ds) {
