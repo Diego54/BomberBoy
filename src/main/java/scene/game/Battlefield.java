@@ -38,8 +38,8 @@ public class Battlefield extends GameScene {
         fillGrid();
         Key[] player1Controls = {Key.LEFT,Key.UP,Key.RIGHT,Key.DOWN,Key.A};
         addComponent(new Player(player1Controls, Color.RED,new Vector2D(1,1)));
-        Key[] player2Controls = {Key.LEFT,Key.UP,Key.RIGHT,Key.DOWN,Key.A};
-        addComponent(new Player(player2Controls, Color.BLUE,new Vector2D(13,11)));
+//        Key[] player2Controls = {Key.LEFT,Key.UP,Key.RIGHT,Key.DOWN,Key.A};
+//        addComponent(new Player(player2Controls, Color.BLUE,new Vector2D(13,11)));
     }
 
     public void buildBattlefield(){

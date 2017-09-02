@@ -20,4 +20,10 @@ public class PowerUp extends RichGameComponent{
     public Boolean pickeable() {
         return true;
     }
+
+    @Override
+    public void explode() {
+        super.explode();
+        getScene().getGrid().removeTile(this);
+    }
 }

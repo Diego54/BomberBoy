@@ -28,15 +28,16 @@ public class Destructible extends Block {
     @Override
     public void destroy() {
         double chance = Math.random()*100;
-//        if(chance<100){
-//            FireRadiusUp powerup = new FireRadiusUp(getPositionAsVector());
-//            getScene().getGrid().addTile(powerup);
-//            getScene().addComponent(powerup);
-//            TileMap coso = getScene().getGrid();
-//            coso.hashCode();
-//        }
+        if(chance<100){
+            FireRadiusUp powerup = new FireRadiusUp(getPositionAsVector());
+            getScene().getGrid().addTile(powerup);
+            getScene().addComponent(powerup);
+            TileMap coso = getScene().getGrid();
+            coso.hashCode();
+        }else{
+            getScene().getGrid().removeTile(this);
+        }
         super.destroy();
-        getScene().getGrid().removeTile(this);
     }
 
     @Override
