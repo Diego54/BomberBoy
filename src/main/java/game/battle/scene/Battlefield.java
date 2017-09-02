@@ -1,13 +1,13 @@
-package scene.game;
+package game.battle.scene;
 
-import com.uqbar.vainilla.Game;
 import com.uqbar.vainilla.GameComponent;
 import com.uqbar.vainilla.GameScene;
 import com.uqbar.vainilla.events.constants.Key;
 import util.Vector2D;
 
-import java.awt.*;
-import java.lang.reflect.InvocationTargetException;
+import java.awt.Color;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by sergio on 27/07/17.
@@ -15,7 +15,7 @@ import java.lang.reflect.InvocationTargetException;
 public class Battlefield extends GameScene {
 //contiene la logica de construccion del campo de batalla
     //TODO BattlefieldBuilder builder = new BattlefieldBuilder();
-    private int players;
+    private List<Player> players;
     private TileMap grid;
 
     public TileMap getGrid() {
@@ -32,14 +32,26 @@ public class Battlefield extends GameScene {
         }
     }
 
+    public List<Player> getPlayers() {
+        return players;
+    }
+
     public Battlefield(){
+        players = new ArrayList<Player>();
         grid = new TileMap(15,13);
         buildBattlefield();
         fillGrid();
+
+        addComponent(new ResetButton());
         Key[] player1Controls = {Key.LEFT,Key.UP,Key.RIGHT,Key.DOWN,Key.A};
-        addComponent(new Player(player1Controls, Color.RED,new Vector2D(1,1)));
-//        Key[] player2Controls = {Key.LEFT,Key.UP,Key.RIGHT,Key.DOWN,Key.A};
-//        addComponent(new Player(player2Controls, Color.BLUE,new Vector2D(13,11)));
+        Player playerOne = new Player(player1Controls, new Color(0,200,66),new Vector2D(1,1),"Mario");
+        addComponent(playerOne);
+        players.add(playerOne);
+
+        Key[] player2Controls = {Key.LEFT,Key.UP,Key.RIGHT,Key.DOWN,Key.A};
+        Player playerTwo = new Player(player2Controls, new Color(130, 47,24),new Vector2D(13,11),"JorgeNitales");
+        addComponent(playerTwo);
+        players.add(playerTwo);
     }
 
     public void buildBattlefield(){

@@ -1,7 +1,6 @@
-package scene.game;
+package game.battle.scene;
 
 import com.uqbar.vainilla.DeltaState;
-import com.uqbar.vainilla.GameComponent;
 import com.uqbar.vainilla.appearances.Rectangle;
 import com.uqbar.vainilla.events.constants.Key;
 import util.KeyBinder;
@@ -18,15 +17,32 @@ public class Player extends RichGameComponent {
     private double speed;
     private int fireRadius;
     private int bombAmount;
+    String nickName;
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Player player = (Player) o;
+
+        return nickName != null ? nickName.equals(player.nickName) : player.nickName == null;
+    }
+
+    @Override
+    public int hashCode() {
+        return nickName != null ? nickName.hashCode() : 0;
+    }
 
     KeyBinder kb;
     private Vector2D oldPosition;
 
-    public Player(Key[] controls, Color color,Vector2D tilePosition){
+    public Player(Key[] controls, Color color,Vector2D tilePosition, String name){
         setAppearance(new Rectangle(color,w,h));
         setX(tilePosition.getX()*w);
         setY(tilePosition.getY()*h);
         setZ(1);
+        nickName = name;
         kb= new KeyBinder(controls);
         fireRadius = 2;
         bombAmount = 2;
@@ -34,7 +50,7 @@ public class Player extends RichGameComponent {
     }
 
     public void die(){
-        this.setDestroyPending(true);
+            destroy();
     }
 
     @Override
@@ -84,4 +100,6 @@ public class Player extends RichGameComponent {
         setX(oldPosition.getX());
         setY(oldPosition.getY());
     }
+
+
 }

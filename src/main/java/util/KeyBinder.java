@@ -3,10 +3,10 @@ package util;
 import com.uqbar.vainilla.DeltaState;
 import com.uqbar.vainilla.colissions.CollisionDetector;
 import com.uqbar.vainilla.events.constants.Key;
-import scene.game.Player;
+import game.battle.scene.Player;
 
-import scene.game.RichGameComponent;
-import scene.game.TileMap;
+import game.battle.scene.RichGameComponent;
+import game.battle.scene.TileMap;
 /**
  * Created by sergio on 28/07/17.
  */

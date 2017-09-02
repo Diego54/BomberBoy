@@ -1,9 +1,10 @@
+package game;
+
 import com.uqbar.vainilla.DesktopGameLauncher;
 import com.uqbar.vainilla.Game;
-import scene.game.Battlefield;
+import game.battle.scene.Battlefield;
 
 import java.awt.*;
-
 /**
  * Created by sergio on 27/07/17.
  */
@@ -18,7 +19,7 @@ public class BombAdict extends Game {
     protected void initializeResources() {}
 
     @Override
-    protected void setUpScenes() {
+    public void setUpScenes() {
         setCurrentScene(new Battlefield());
     }
 

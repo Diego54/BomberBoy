@@ -1,4 +1,4 @@
-package scene.game;
+package game.battle.scene;
 
 import com.uqbar.vainilla.DeltaState;
 import com.uqbar.vainilla.appearances.Circle;

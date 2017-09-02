@@ -1,8 +1,7 @@
-package scene.game;
+package game.battle.scene;
 
 import util.Vector2D;
 
-import java.lang.reflect.InvocationTargetException;
 import java.util.Random;
 
 /**

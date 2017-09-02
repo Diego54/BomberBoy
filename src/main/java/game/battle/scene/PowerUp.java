@@ -1,6 +1,5 @@
-package scene.game;
+package game.battle.scene;
 
-import com.uqbar.vainilla.appearances.*;
 import util.Vector2D;
 
 import java.awt.*;

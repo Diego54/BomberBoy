@@ -1,7 +1,5 @@
-package scene.game;
+package game.battle.scene;
 
-import com.uqbar.vainilla.DeltaState;
-import com.uqbar.vainilla.GameComponent;
 import com.uqbar.vainilla.appearances.Rectangle;
 
 import java.awt.*;

@@ -1,4 +1,4 @@
-package scene.game;
+package game.battle.scene;
 
 import java.awt.*;
 

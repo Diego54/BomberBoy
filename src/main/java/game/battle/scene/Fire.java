@@ -1,10 +1,13 @@
-package scene.game;
+package game.battle.scene;
 
 import com.uqbar.vainilla.DeltaState;
 import com.uqbar.vainilla.appearances.Circle;
+import com.uqbar.vainilla.colissions.CollisionDetector;
 import util.Vector2D;
 
-import java.awt.*;
+import java.awt.Color;
+import java.util.Iterator;
+import java.util.List;
 
 /**
  * Created by Pelotita on 24/8/2017.
@@ -23,13 +26,27 @@ public class Fire extends RichGameComponent {
         setZ(2);
     }
 
+    private void killClosePlayers(List<Player> players){
+        List<Player> playersAux = players;
+        Iterator<Player> iterator = playersAux.iterator();
+        while(iterator.hasNext()) {
+            Player p = iterator.next();
+            if (CollisionDetector.INSTANCE.collidesCircleAgainstRect(getX(), getY(), 10, p.getX(), p.getY(), w, h)) {
+                iterator.remove();
+                p.die();
+            }
+        }
+    }
+
     public void update(DeltaState ds) {
         this.elapsed += ds.getDelta();
+        List<Player> alivePlayers = getScene().getPlayers();
         RichGameComponent rgc = getScene().getGrid().getTile(getTile());
         if (rgc != null && mustBurn){
             rgc.explode();
             mustBurn = false;
         }
+        killClosePlayers(alivePlayers);
         if (elapsed >= countdown) {
             this.destroy();
         }

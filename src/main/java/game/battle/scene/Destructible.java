@@ -1,4 +1,4 @@
-package scene.game;
+package game.battle.scene;
 
 import com.uqbar.vainilla.DeltaState;
 
@@ -34,8 +34,6 @@ public class Destructible extends Block {
             PowerUp powerup = puf.getPowerUp(getPositionAsVector());
             getScene().getGrid().addTile(powerup);
             getScene().addComponent(powerup);
-            TileMap coso = getScene().getGrid();
-            coso.hashCode();
         }else{
             getScene().getGrid().removeTile(this);
         }
