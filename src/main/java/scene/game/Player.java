@@ -18,7 +18,9 @@ public class Player extends RichGameComponent {
     private double speed;
     private int fireRadius;
     private int bombAmount;
+
     KeyBinder kb;
+    private Vector2D oldPosition;
 
     public Player(Key[] controls, Color color,Vector2D tilePosition){
         setAppearance(new Rectangle(color,w,h));
@@ -37,6 +39,7 @@ public class Player extends RichGameComponent {
 
     @Override
     public void update(DeltaState deltaState) {
+        oldPosition = getPositionAsVector();
         kb.checkKeys(deltaState,this, this.getScene().getGrid());
         super.update(deltaState);
     }
@@ -69,5 +72,16 @@ public class Player extends RichGameComponent {
 
     public void fireUp() {
         this.fireRadius++;
+    }
+
+    public void mustCollideWith(RichGameComponent obstacleLeft, boolean collide) {
+        if(collide){
+            obstacleLeft.applyEfectIn(this);
+        }
+    }
+
+    public void stepBack() {
+        setX(oldPosition.getX());
+        setY(oldPosition.getY());
     }
 }

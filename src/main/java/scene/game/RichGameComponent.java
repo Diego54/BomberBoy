@@ -24,9 +24,9 @@ public class RichGameComponent extends GameComponent<Battlefield> {
         return new Vector2D(getX(),getY());
     }
 
-    public Boolean pickeable(){
-        return false;
-    }
-
     public void explode(){destroy();}
+
+    public void applyEfectIn(Player player) {
+        player.stepBack();
+    }
 }

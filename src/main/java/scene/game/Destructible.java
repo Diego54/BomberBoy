@@ -27,9 +27,11 @@ public class Destructible extends Block {
 
     @Override
     public void destroy() {
+        PowerUpFactory puf = new PowerUpFactory();
         double chance = Math.random()*100;
-        if(chance<100){
-            FireRadiusUp powerup = new FireRadiusUp(getPositionAsVector());
+        if(chance<20){
+//            FireRadiusUp powerup = new FireRadiusUp(getPositionAsVector());
+            PowerUp powerup = puf.getPowerUp(getPositionAsVector());
             getScene().getGrid().addTile(powerup);
             getScene().addComponent(powerup);
             TileMap coso = getScene().getGrid();

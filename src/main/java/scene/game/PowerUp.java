@@ -8,7 +8,7 @@ import java.awt.*;
 /**
  * Created by Pelotita on 26/8/2017.
  */
-public class PowerUp extends RichGameComponent{
+abstract public class PowerUp extends RichGameComponent{
 
     public PowerUp(Vector2D tilePos, Color color){
         setAppearance(new com.uqbar.vainilla.appearances.Rectangle(color,w,h));
@@ -17,13 +17,18 @@ public class PowerUp extends RichGameComponent{
     }
 
     @Override
-    public Boolean pickeable() {
-        return true;
-    }
-
-    @Override
     public void explode() {
         super.explode();
         getScene().getGrid().removeTile(this);
     }
+
+    @Override
+    public void applyEfectIn(Player player) {
+        efect(player);
+        getScene().getGrid().removeTile(this);
+        destroy();
+    }
+
+    abstract protected void efect(Player player);
+
 }
