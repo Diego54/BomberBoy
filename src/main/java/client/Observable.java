@@ -23,4 +23,8 @@ public interface Observable {
         this.observers.forEach(observer -> observer.update(jsonObject));
     }
 
+    default void notifyDropedBomb(JSONObject jsonObject){
+        this.observers.forEach(observer -> observer.updateDropedBomb(jsonObject));
+    }
+
 }

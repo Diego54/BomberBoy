@@ -1,25 +1,30 @@
 var app = require('express')();
 var server = require('http').Server(app);
 var io = require('socket.io')(server);
-var self;
+
 
 var players = [];
 
 server.listen(9000, function(){
-    log("Yerimen Server started.");
+    log("BomberLan Server started.");
 });
 
 io.on('connection', function(socket){
-
+    console.log("Alguien se conecto al server!!!")
     socket.on('playerMoved', function(data){
+        console.log("Jugador movido")
         socket.broadcast.emit('playerMoved', data);
         updatePlayer(data);
+    });
+
+    socket.on('playerDropedBomb', function(data){
+        console.log("Jugador Pone bomba!!!")
+        socket.broadcast.emit('playerDropedBomb', data);
     });
 
     socket.on('disconnect', function(){
         socket.broadcast.emit('playerDisconnected', { id: socket.id });
         log("Player with ID [" + socket.id + "] just logged out.");
-        removePlayer(socket.id);
     });
 });
 

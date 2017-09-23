@@ -29,13 +29,18 @@ public class Client implements Observer {
         socket
 //                .on("getStartedInfo", this::getStartedInfo)
 //                .on("registerNewPlayer", this::registerNewPlayer)
-//                .on("playerDisconnected", this::playerDisconnected)
+                .on("playerDropedBomb", this::playerDropedBomb)
                 .on("playerMoved", this::playerMoved);
     }
 
     @Override
     public void update(JSONObject jsonObject) {
         socket.emit("playerMoved",jsonObject);
+    }
+
+    @Override
+    public void updateDropedBomb(JSONObject jsonObject){
+        socket.emit("playerDropedBomb",jsonObject);
     }
 
     public void playerMoved(Object[] args){
@@ -47,6 +52,16 @@ public class Client implements Observer {
             Player p = scene.getPlayers().get(playerId);
             p.setX(x);
             p.setY(y);
+        } catch (JSONException e) {
+            throw new RuntimeException("SocketIO - Move Character Error");
+        }
+    }
+    public void playerDropedBomb(Object[] args){
+        JSONObject data = (JSONObject) args[0];
+        try {
+            int playerId = data.getInt("id");
+            Player p = scene.getPlayers().get(playerId);
+            p.dropBomb();
         } catch (JSONException e) {
             throw new RuntimeException("SocketIO - Move Character Error");
         }

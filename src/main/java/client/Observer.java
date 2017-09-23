@@ -6,4 +6,6 @@ public interface Observer {
 
     void update(JSONObject jsonObject);
 
+    void updateDropedBomb(JSONObject jsonObject);
+
 }

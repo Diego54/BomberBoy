@@ -51,6 +51,7 @@ public class KeyBinder{
 
         if (state.isKeyPressed(controls[4])) {
             player.dropBomb();
+            player.notifyDropedBomb(player.toJson());
         }
     }
 

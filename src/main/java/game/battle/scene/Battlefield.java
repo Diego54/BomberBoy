@@ -43,7 +43,7 @@ public class Battlefield extends GameScene {
         buildBattlefield();
         fillGrid();
 
-        Client gameClient = new Client("localhost:9000",this);
+        Client gameClient = new Client("http://localhost:9000",this);
 
         addComponent(new ResetButton());
 
@@ -54,7 +54,7 @@ public class Battlefield extends GameScene {
         players.add(playerOne);
         playerOne.addObserver(gameClient);
 
-        Key[] player2Controls = {Key.LEFT,Key.UP,Key.RIGHT,Key.DOWN,Key.A};
+        Key[] player2Controls = {Key.J,Key.I,Key.L,Key.K,Key.SPACE};
         Player playerTwo = new Player(player2Controls, new Color(130, 47,24),new Vector2D(13,11),"JorgeNitales");
         addComponent(playerTwo);
         playerTwo.setId(1);
