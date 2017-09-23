@@ -31,18 +31,22 @@ public class KeyBinder{
         if (state.isKeyBeingHold(controls[0])){
             player.setX(player.getX() - player.getSpeed());
             player.mustCollideWith(obstacleLeft,cd.collidesRectAgainstRect(player,obstacleLeft).equals(cd.LEFT));
+            player.notify(player.toJson());
         }
         if (state.isKeyBeingHold(controls[1])){
             player.setY(player.getY() - player.getSpeed());
             player.mustCollideWith(obstacleTop,cd.collidesRectAgainstRect(player,obstacleTop).equals(cd.TOP));
+            player.notify(player.toJson());
         }
         if (state.isKeyBeingHold(controls[2])){
             player.setX(player.getX() + player.getSpeed());
             player.mustCollideWith(obstacleRight,cd.collidesRectAgainstRect(player, obstacleRight).equals(cd.RIGHT));
+            player.notify(player.toJson());
         }
         if (state.isKeyBeingHold(controls[3])){
             player.setY(player.getY() + player.getSpeed());
             player.mustCollideWith(obstacleBot,cd.collidesRectAgainstRect(player,obstacleBot).equals(cd.BOT));
+            player.notify(player.toJson());
         }
 
         if (state.isKeyPressed(controls[4])) {

@@ -1,5 +1,6 @@
 package game.battle.scene;
 
+import client.Client;
 import com.uqbar.vainilla.GameComponent;
 import com.uqbar.vainilla.GameScene;
 import com.uqbar.vainilla.events.constants.Key;
@@ -22,9 +23,9 @@ public class Battlefield extends GameScene {
         return grid;
     }
 
-    public void setGrid(TileMap grid) {
-        this.grid = grid;
-    }
+//    public void setGrid(TileMap grid) {
+//        this.grid = grid;
+//    }
 
     private void fillGrid(){
         for (GameComponent gc : this.getComponents()) {
@@ -42,16 +43,23 @@ public class Battlefield extends GameScene {
         buildBattlefield();
         fillGrid();
 
+        Client gameClient = new Client("localhost:9000",this);
+
         addComponent(new ResetButton());
+
         Key[] player1Controls = {Key.LEFT,Key.UP,Key.RIGHT,Key.DOWN,Key.A};
         Player playerOne = new Player(player1Controls, new Color(0,200,66),new Vector2D(1,1),"Mario");
         addComponent(playerOne);
+        playerOne.setId(0);
         players.add(playerOne);
+        playerOne.addObserver(gameClient);
 
         Key[] player2Controls = {Key.LEFT,Key.UP,Key.RIGHT,Key.DOWN,Key.A};
         Player playerTwo = new Player(player2Controls, new Color(130, 47,24),new Vector2D(13,11),"JorgeNitales");
         addComponent(playerTwo);
+        playerTwo.setId(1);
         players.add(playerTwo);
+        playerTwo.addObserver(gameClient);
     }
 
     public void buildBattlefield(){

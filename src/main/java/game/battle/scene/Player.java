@@ -1,8 +1,10 @@
 package game.battle.scene;
 
+import client.Observable;
 import com.uqbar.vainilla.DeltaState;
 import com.uqbar.vainilla.appearances.Rectangle;
 import com.uqbar.vainilla.events.constants.Key;
+import org.json.JSONObject;
 import util.KeyBinder;
 import util.Vector2D;
 
@@ -12,11 +14,14 @@ import java.awt.*;
 /**
  * Created by sergio on 27/07/17.
  */
-public class Player extends RichGameComponent {
+public class Player extends RichGameComponent implements Observable{
 
+    int id;
     private double speed;
     private int fireRadius;
     private int bombAmount;
+    KeyBinder kb;
+
     String nickName;
 
     @Override
@@ -33,8 +38,6 @@ public class Player extends RichGameComponent {
     public int hashCode() {
         return nickName != null ? nickName.hashCode() : 0;
     }
-
-    KeyBinder kb;
     private Vector2D oldPosition;
 
     public Player(Key[] controls, Color color,Vector2D tilePosition, String name){
@@ -74,10 +77,6 @@ public class Player extends RichGameComponent {
         return speed;
     }
 
-    public int getBombAmount() {
-        return bombAmount;
-    }
-
     public void restoreStock() {
         bombAmount++;
     }
@@ -101,5 +100,24 @@ public class Player extends RichGameComponent {
         setY(oldPosition.getY());
     }
 
+    public JSONObject toJson(){
+        JSONObject data = new JSONObject();
+        try {
+            data.put("id",getId());
+            data.put("x", getX());
+            data.put("y", getY());
+            data.put("name", nickName);
+            return data;
+        }catch (Exception e){
+            throw new RuntimeException("Error - Json");
+        }
+    }
 
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
 }
