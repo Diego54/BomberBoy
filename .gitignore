@@ -5,3 +5,4 @@
 .idea
 BombAdict.iml
 /server/node_modules/
+/classes/
