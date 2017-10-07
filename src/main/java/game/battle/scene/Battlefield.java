@@ -18,6 +18,8 @@ public class Battlefield extends GameScene {
     //TODO BattlefieldBuilder builder = new BattlefieldBuilder();
     private List<Player> players;
     private TileMap grid;
+    public Client gameClient;
+
 
     public TileMap getGrid() {
         return grid;
@@ -38,12 +40,12 @@ public class Battlefield extends GameScene {
     }
 
     public Battlefield(){
+        gameClient = new Client("http://localhost:9000",this);
         players = new ArrayList<Player>();
         grid = new TileMap(15,13);
         buildBattlefield();
         fillGrid();
 
-        Client gameClient = new Client("http://localhost:9000",this);
 
         addComponent(new ResetButton());
 
@@ -64,9 +66,10 @@ public class Battlefield extends GameScene {
 
     public void buildBattlefield(){
         buildFieldLimits();
-        fillDestructibleBlocks(1, 1, 12, 10);
+//        fillDestructibleBlocks(1, 1, 12, 10);
+        askForBuildMap();
         buidBlockGrid();
-        emptyBlocks();
+//        emptyBlocks();
         //placePlayers();
     }
 
@@ -103,19 +106,11 @@ public class Battlefield extends GameScene {
         }
     }
 
-    public void fillDestructibleBlocks(int startX, int startY, int endX, int endY){
-        //llena un cuadrado debloques rompibles
-        for (int i=startX; i < (endX+2); i=i+1){
-            for (int j = startY; j < (endY+2); j=j+1){
-                double chance = Math.random()*100;
-                if(chance<90){
-                    Destructible block = new Destructible(i,j);
-                    getGrid().addTile(block);
-                    addComponent(block);
-                }
-            }
-        }
+    public void askForBuildMap(){
+        gameClient.mustFillDestructibles();
     }
+
+
 
     public void emptyBlocks(){
         RichGameComponent[] toRemove = {grid.getTile(1d,1d),

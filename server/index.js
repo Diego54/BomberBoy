@@ -3,13 +3,15 @@ var server = require('http').Server(app);
 var io = require('socket.io')(server);
 
 
-var players = [];
+var players = 0;
+var blocks = [];
 
 server.listen(9000, function(){
     log("BomberLan Server started.");
 });
 
 io.on('connection', function(socket){
+    players ++
     console.log("Alguien se conecto al server!!!")
     socket.on('playerMoved', function(data){
         socket.broadcast.emit('playerMoved', data);
@@ -21,8 +23,25 @@ io.on('connection', function(socket){
         socket.broadcast.emit('playerDropedBomb', data);
     });
 
+    socket.on('playersAmount', function(data){
+        data.players = players
+        log(data.players)
+        socket.emit('playersAmountResult', data)
+    });
+
+    socket.on('createdBlocks',function (data) {
+        blocks = data;
+
+    });
+
+    socket.on('getBlocks',function (data) {
+        data.blocks = blocks;
+        socket.emit('getBlocksResponse',data)
+    });
+
     socket.on('disconnect', function(){
         socket.broadcast.emit('playerDisconnected', { id: socket.id });
+        players--;
         log("Player with ID [" + socket.id + "] just logged out.");
     });
 });

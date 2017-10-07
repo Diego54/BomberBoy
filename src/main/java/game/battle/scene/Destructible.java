@@ -1,6 +1,7 @@
 package game.battle.scene;
 
 import com.uqbar.vainilla.DeltaState;
+import org.json.JSONObject;
 
 import java.awt.*;
 
@@ -43,5 +44,16 @@ public class Destructible extends Block {
     @Override
     Color getColor() {
         return Color.GRAY;
+    }
+    public JSONObject toJson(){
+        JSONObject data = new JSONObject();
+        try {
+            data.put("x", getTile().getX());
+            data.put("y", getTile().getY());
+            data.put("clazz", getClass());
+            return data;
+        }catch (Exception e){
+            throw new RuntimeException("Error - Json");
+        }
     }
 }
