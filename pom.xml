@@ -6,7 +6,7 @@
 
     <groupId>com.nombre_pendiente</groupId>
     <artifactId>BombAdict</artifactId>
-    <version>Entrega.1</version>
+    <version>Entrega.2</version>
 
     <!-- Output to jar format -->
     <packaging>jar</packaging>
