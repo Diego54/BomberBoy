@@ -6,7 +6,7 @@
 
     <groupId>com.nombre_pendiente</groupId>
     <artifactId>BombAdict</artifactId>
-    <version>1.0-SNAPSHOT</version>
+    <version>Entrega.1</version>
 
     <!-- Output to jar format -->
     <packaging>jar</packaging>
@@ -43,6 +43,8 @@
             <groupId>com.uqbar</groupId>
             <artifactId>vainilla</artifactId>
             <version>0.0.4</version>
+            <scope>system</scope>
+            <systemPath>${project.basedir}/src/main/resource/vainilla-0.0.4.jar</systemPath>
         </dependency>
         <dependency>
             <groupId>io.socket</groupId>

@@ -8,24 +8,12 @@ is a game with more than 35 years since its first version. the goal is to be the
 
 
 ### Requirements
-- Java 7
+- Java 8
 
 ### Installation and Usage
 - Clone repository
 ``` shell
  git clone https://github.com/Diego54/BomberLan.git
-```
-- Rename folder to 'bomberman'
-``` shell
- mv <git clone folder>/BomberLan bomberman
-```
-- Clone the engine
-``` shell
- git clone https://github.com/Diego54/BomberLan.git --branch master-vainilla
-```
-- Rename folder to 'vainilla'
-``` shell
- mv <git clone folder>/BomberLan vainilla
 ```
 - To run
 ``` shell

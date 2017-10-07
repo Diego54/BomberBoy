@@ -12,7 +12,6 @@ server.listen(9000, function(){
 io.on('connection', function(socket){
     console.log("Alguien se conecto al server!!!")
     socket.on('playerMoved', function(data){
-        console.log("Jugador movido")
         socket.broadcast.emit('playerMoved', data);
         updatePlayer(data);
     });
