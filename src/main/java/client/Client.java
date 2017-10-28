@@ -9,6 +9,7 @@ import io.socket.client.Socket;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+import util.Vector2D;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -98,9 +99,11 @@ public class Client implements Observer {
                 JSONObject object = blocks.getJSONObject(i);
                 int x = object.getInt("x");
                 int y = object.getInt("y");
-                Destructible block = new Destructible(x,y);
-                scene.getGrid().addTile(block);
-                scene.addComponent(block);
+                if(scene.getGrid().getTile(new Vector2D(x,y))==null ) {
+                    Destructible block = new Destructible(x,y);
+                    scene.getGrid().addTile(block);
+                    scene.addComponent(block);
+                }
             }
             scene.emptyBlocks();
         } catch (JSONException e) {
@@ -115,10 +118,12 @@ public class Client implements Observer {
             for (int j = startY; j < (endY+2); j=j+1){
                 double chance = Math.random()*100;
                 if(chance<90){
-                    Destructible block = new Destructible(i,j);
-                    scene.getGrid().addTile(block);
-                    scene.addComponent(block);
-                    blocks.add(block.toJson());
+                    if(scene.getGrid().getTile(new Vector2D(i,j))==null ) {
+                        Destructible block = new Destructible(i, j);
+                        scene.getGrid().addTile(block);
+                        scene.addComponent(block);
+                        blocks.add(block.toJson());
+                    }
                 }
             }
         }
