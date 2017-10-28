@@ -1,5 +1,6 @@
 package game.battle.scene;
 
+import org.json.JSONObject;
 import util.Vector2D;
 
 import java.awt.*;
@@ -28,6 +29,22 @@ abstract public class PowerUp extends RichGameComponent{
         destroy();
     }
 
+    public JSONObject toJson(){
+        JSONObject data = new JSONObject();
+        try {
+            data.put("x", getX());
+            data.put("y", getY());
+            data.put("clazz", getClass());
+            return data;
+        }catch (Exception e){
+            throw new RuntimeException("Error - Json");
+        }
+    }
+
     abstract protected void efect(Player player);
+
+    public void notify(String message){
+        getScene().gameClient.notifyPowerupSpawn(message, this);
+    }
 
 }

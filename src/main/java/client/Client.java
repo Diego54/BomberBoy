@@ -3,6 +3,7 @@ package client;
 import game.battle.scene.Battlefield;
 import game.battle.scene.Destructible;
 import game.battle.scene.Player;
+import game.battle.scene.PowerUp;
 import io.socket.client.IO;
 import io.socket.client.Socket;
 
@@ -11,6 +12,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 import util.Vector2D;
 
+import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -35,9 +37,11 @@ public class Client implements Observer {
                 .on("getBlocksResponse", this::fillDestructiblesFromServer)
                 .on("playersAmountResult", this::fillDestructibles)
                 .on("playerDropedBomb", this::playerDropedBomb)
-                .on("playerMoved", this::playerMoved);
+                .on("playerMoved", this::playerMoved)
+                .on("powerupSpawned",this::powerupSpawned);
     }
 
+    //Player Notifications
     @Override
     public void update(JSONObject jsonObject) {
         socket.emit("playerMoved",jsonObject);
@@ -71,6 +75,8 @@ public class Client implements Observer {
             throw new RuntimeException("SocketIO - Move Character Error");
         }
     }
+
+    //Battlefield Construction
     public void mustFillDestructibles(){
         socket.emit("playersAmount",new JSONObject());
     }
@@ -128,5 +134,24 @@ public class Client implements Observer {
             }
         }
         return blocks;
+    }
+
+    //Powerups Notifications
+
+    public void notifyPowerupSpawn(String message, PowerUp powerUp) {
+        socket.emit(message, powerUp.toJson());
+    }
+
+    public void powerupSpawned(Object[] args){
+        JSONObject data = (JSONObject) args[0];
+        try {
+            String powerupClass = data.getString("clazz");
+            Double x = data.getDouble("x");
+            Double y = data.getDouble("y");
+            Class<?> cls = Class.forName(powerupClass);
+            System.out.println(cls.getClass());
+        }catch (Exception e){
+            e.printStackTrace();
+        }
     }
 }

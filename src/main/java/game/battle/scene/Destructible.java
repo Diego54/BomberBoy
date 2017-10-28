@@ -31,10 +31,10 @@ public class Destructible extends Block {
         PowerUpFactory puf = new PowerUpFactory();
         double chance = Math.random()*100;
         if(chance<20){
-//            FireRadiusUp powerup = new FireRadiusUp(getPositionAsVector());
             PowerUp powerup = puf.getPowerUp(getPositionAsVector());
             getScene().getGrid().addTile(powerup);
             getScene().addComponent(powerup);
+            powerup.notify("spawnPowerup");
         }else{
             getScene().getGrid().removeTile(this);
         }

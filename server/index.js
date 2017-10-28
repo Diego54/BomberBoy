@@ -39,6 +39,11 @@ io.on('connection', function(socket){
         socket.emit('getBlocksResponse',data)
     });
 
+    socket.on('spawnPowerup',function (data) {
+        console.log("EL POWERUP SE ENCUENTRA EN EL TILE: " + data.x+ "@" + data.y + "Y ES DE TIPO: " + data.clazz)
+        socket.broadcast.emit('powerupSpawned',data)
+    });
+
     socket.on('disconnect', function(){
         socket.broadcast.emit('playerDisconnected', { id: socket.id });
         players--;
