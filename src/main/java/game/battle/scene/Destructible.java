@@ -34,7 +34,7 @@ public class Destructible extends Block {
             PowerUp powerup = puf.getPowerUp(getPositionAsVector());
             getScene().getGrid().addTile(powerup);
             getScene().addComponent(powerup);
-            powerup.notify("spawnPowerup");
+//            powerup.notify("spawnPowerup");
         }else{
             getScene().getGrid().removeTile(this);
         }

@@ -50,14 +50,14 @@ public class Battlefield extends GameScene {
         addComponent(new ResetButton());
 
         Key[] player1Controls = {Key.LEFT,Key.UP,Key.RIGHT,Key.DOWN,Key.A};
-        Player playerOne = new Player(player1Controls, new Color(0,200,66),new Vector2D(1,1),"Mario");
+        Player playerOne = new Player(player1Controls, 0,new Vector2D(1,1),"Mario");
         addComponent(playerOne);
         playerOne.setId(0);
         players.add(playerOne);
         playerOne.addObserver(gameClient);
 
         Key[] player2Controls = {Key.J,Key.I,Key.L,Key.K,Key.SPACE};
-        Player playerTwo = new Player(player2Controls, new Color(130, 47,24),new Vector2D(13,11),"JorgeNitales");
+        Player playerTwo = new Player(player2Controls, 1 ,new Vector2D(13,11),"JorgeNitales");
         addComponent(playerTwo);
         playerTwo.setId(1);
         players.add(playerTwo);

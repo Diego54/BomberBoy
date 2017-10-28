@@ -2,8 +2,11 @@ package game.battle.scene;
 
 import client.Observable;
 import com.uqbar.vainilla.DeltaState;
+import com.uqbar.vainilla.appearances.Animation;
 import com.uqbar.vainilla.appearances.Rectangle;
+import com.uqbar.vainilla.appearances.Sprite;
 import com.uqbar.vainilla.events.constants.Key;
+import game.battle.components.PlayerState;
 import org.json.JSONObject;
 import util.KeyBinder;
 import util.Vector2D;
@@ -20,6 +23,7 @@ public class Player extends RichGameComponent implements Observable{
     private double speed;
     private int fireRadius;
     private int bombAmount;
+    public PlayerState playerState;
     KeyBinder kb;
 
     String nickName;
@@ -40,8 +44,10 @@ public class Player extends RichGameComponent implements Observable{
     }
     private Vector2D oldPosition;
 
-    public Player(Key[] controls, Color color,Vector2D tilePosition, String name){
-        setAppearance(new Rectangle(color,w,h));
+    public Player(Key[] controls, int color,Vector2D tilePosition, String name){
+//        setAppearance(new Rectangle(color,w,h));
+        playerState = new PlayerState(color);
+        setAppearance(playerState.animations[0]);
         setX(tilePosition.getX()*w);
         setY(tilePosition.getY()*h);
         setZ(1);

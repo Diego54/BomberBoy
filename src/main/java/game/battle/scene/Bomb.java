@@ -1,8 +1,12 @@
 package game.battle.scene;
 
 import com.uqbar.vainilla.DeltaState;
+import com.uqbar.vainilla.appearances.Animation;
+import com.uqbar.vainilla.appearances.Appearance;
 import com.uqbar.vainilla.appearances.Circle;
+import com.uqbar.vainilla.appearances.Sprite;
 import com.uqbar.vainilla.colissions.CollisionDetector;
+import util.AparienceFactory;
 import util.Vector2D;
 
 import java.awt.*;
@@ -22,7 +26,7 @@ public class Bomb extends RichGameComponent {
         this.setX((playerpos.getX().intValue()*w)+12.5);
         this.setY((playerpos.getY().intValue()*h)+9);//TODO arreglar este hardcodeo
         this.player = player;
-        this.setAppearance(new Circle(Color.BLACK, 28));
+        this.setAppearance(AparienceFactory.fetchAppearance());
     }
 
     @Override
@@ -104,6 +108,8 @@ public class Bomb extends RichGameComponent {
         }
 
     }
+
+
 
     public Player getPlayer() {
         return player;
